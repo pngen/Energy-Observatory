@@ -6,43 +6,39 @@ on:
   pull_request:
 
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest, windows-latest ]
-    runs-on: ${{ matrix.os }}
+  build-linux:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure (Linux)
-        if: runner.os == 'Linux'
+      - name: Configure
         run: cmake -S . -B build -DEOBSV_BUILD_TESTS=ON -DEOBSV_BUILD_EXAMPLES=ON
 
-      - name: Build (Linux)
-        if: runner.os == 'Linux'
+      - name: Build
         run: cmake --build build
 
-      - name: Test (Linux)
-        if: runner.os == 'Linux'
+      - name: Test
         run: ctest --test-dir build --output-on-failure
 
-      - name: Configure (Windows)
-        if: runner.os == 'Windows'
-        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DEOBSV_BUILD_TESTS=ON -DEOBSV_BUILD_EXAMPLES=ON
+      - name: Package
+        run: cpack --config build/CPackConfig.cmake -B build -G TGZ
 
-      - name: Build (Windows)
-        if: runner.os == 'Windows'
-        run: cmake --build build --config Release
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Test (Windows)
-        if: runner.os == 'Windows'
-        run: ctest --test-dir build -C Release --output-on-failure
+      - name: Set up MSVC developer environment
+        uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Package (Windows)
-        if: runner.os == 'Windows'
-        run: cpack --config build/CPackConfig.cmake -G ZIP
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DEOBSV_BUILD_TESTS=ON -DEOBSV_BUILD_EXAMPLES=ON
 
-      - name: Package (Linux)
-        if: runner.os == 'Linux'
-        run: cpack --config build/CPackConfig.cmake -G TGZ
+      - name: Build
+        run: cmake --build build
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Package
+        run: cpack --config build/CPackConfig.cmake -B build -G ZIP
