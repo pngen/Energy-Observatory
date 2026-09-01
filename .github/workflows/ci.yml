@@ -1,0 +1,48 @@
+name: ci
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure (Linux)
+        if: runner.os == 'Linux'
+        run: cmake -S . -B build -DEOBSV_BUILD_TESTS=ON -DEOBSV_BUILD_EXAMPLES=ON
+
+      - name: Build (Linux)
+        if: runner.os == 'Linux'
+        run: cmake --build build
+
+      - name: Test (Linux)
+        if: runner.os == 'Linux'
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DEOBSV_BUILD_TESTS=ON -DEOBSV_BUILD_EXAMPLES=ON
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        run: cmake --build build --config Release
+
+      - name: Test (Windows)
+        if: runner.os == 'Windows'
+        run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Package (Windows)
+        if: runner.os == 'Windows'
+        run: cpack --config build/CPackConfig.cmake -G ZIP
+
+      - name: Package (Linux)
+        if: runner.os == 'Linux'
+        run: cpack --config build/CPackConfig.cmake -G TGZ
