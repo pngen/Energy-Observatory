@@ -160,3 +160,7 @@ Downstream projects consume the installed package with:
 - [docs/DISTINCTIONS.md](docs/DISTINCTIONS.md) — the full catalogue of
   distinctions the runtime refuses to collapse.
 - [docs/DESIGN.md](docs/DESIGN.md) — architecture, layering, and invariants.
+
+## License
+
+Apache License 2.0. Copyright 2026 Summon Software Labs. No telemetry transmission.
