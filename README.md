@@ -151,7 +151,7 @@ Downstream projects consume the installed package with:
 
 ## License
 
-[MIT](LICENSE). No Co-authored-by trailers are added to commits.
+[Apache License 2.0](LICENSE). No Co-authored-by trailers are added to commits.
 
 ## Provenance & design notes
 

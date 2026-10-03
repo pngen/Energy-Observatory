@@ -116,10 +116,9 @@ install(FILES
 
 # --- Packaging (CPack) ----------------------------------------------------------
 set(CPACK_PACKAGE_NAME "EnergyObservatory")
-set(CPACK_PACKAGE_VENDOR "pngen")
+set(CPACK_PACKAGE_VENDOR "Summon Software Labs")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Evidence and attribution layer for accelerator energy behaviour")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
-set(CPACK_PACKAGE_CONTACT "pngen93@gmail.com")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_FILE_NAME "EnergyObservatory-${PROJECT_VERSION}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
 
