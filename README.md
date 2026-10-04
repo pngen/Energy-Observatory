@@ -1,7 +1,7 @@
 # Energy Observatory
 
 > The evidence and attribution layer immediately adjacent to
-> [Power Governor](../Power-Governor). It makes accelerator **energy behaviour**
+> [Power Governor](https://github.com/pngen/Power-Governor). It makes accelerator **energy behaviour**
 > a first-class, **replayable systems record**: strong typed identities and
 > generations, typed units with validation, a provenance-aware observation
 > model, and workload/request/attempt/execution/phase energy attribution.
@@ -160,7 +160,3 @@ Downstream projects consume the installed package with:
 - [docs/DISTINCTIONS.md](docs/DISTINCTIONS.md) — the full catalogue of
   distinctions the runtime refuses to collapse.
 - [docs/DESIGN.md](docs/DESIGN.md) — architecture, layering, and invariants.
-
-## License
-
-Apache License 2.0. Copyright 2026 Summon Software Labs. No telemetry transmission.
